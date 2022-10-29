@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../Classes/logo.dart';
+import 'choosingComplPage.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -16,25 +18,25 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
 
     //Лого лучше будет сделать ассетом, пока такая заглушка
-    Widget _logo(){
-      return Padding(
-        padding: EdgeInsets.only(top: 140),
-        child: Container(
-          //color: Colors.black,
-          child: Center(
-            child: const Text(
-                'dvorets',
-                style: TextStyle(
-                  fontSize: 70,
-                  fontFamily: 'Arial',
-                  backgroundColor: Colors.black ,
-                  color: Colors.deepPurple,
-                )
-            ),
-          ),
-        ),
-      );
-    }
+    // Widget _logo(){
+    //   return Padding(
+    //     padding: EdgeInsets.only(top: 140),
+    //     child: Container(
+    //       //color: Colors.black,
+    //       child: Center(
+    //         child: const Text(
+    //           'dvorets',
+    //           style: TextStyle(
+    //             fontSize: 70,
+    //             fontFamily: 'Arial',
+    //             backgroundColor: Colors.black ,
+    //             color: Colors.deepPurple,
+    //           )
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     Widget _input(String hint, TextEditingController controller){
       return Container(
@@ -53,13 +55,20 @@ class _AuthPageState extends State<AuthPage> {
       );
     }
 
-    void _next(){
+     _next(){
       final _firstName = _firstNameController.text;
       _firstNameController.clear();
       final _lastName = _lastNameController.text;
       _lastNameController.clear();
       final _email = _emailController.text;
       _emailController.clear();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context){
+            return ComplsPage();
+          }
+        )
+      );
     }
 
     Widget _buttonNext(String text, void func()){
@@ -80,39 +89,39 @@ class _AuthPageState extends State<AuthPage> {
 
     Widget _form(String label, void func()){
       return Column(
-          children: <Widget>[
-            Icon(
-              Icons.account_circle,
-              color: Colors.black,
-              size: 35.0,
+        children: <Widget>[
+           Icon(
+             Icons.account_circle,
+             color: Colors.black,
+             size: 35.0,
+           ),
+           Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            child: _input('Введите имя', _firstNameController),
+          ),
+           Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 20),
+            child: _input('Введите фамилию', _lastNameController),
+          ),
+           Icon(
+               Icons.email,
+               color: Colors.black,
+               size: 35.0,
+           ),
+           Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 20),
+            child: _input('Введите почту', _emailController),
+          ),
+          const SizedBox(height: 50),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal:80),
+            child: Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width,
+              child: _buttonNext(label, _next),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              child: _input('Введите имя', _firstNameController),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 20),
-              child: _input('Введите фамилию', _lastNameController),
-            ),
-            Icon(
-              Icons.email,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 20),
-              child: _input('Введите почту', _emailController),
-            ),
-            const SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal:20),
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: _buttonNext(label, _next),
-              ),
-            )
-          ]
+          )
+        ]
       );
     }
 
@@ -120,9 +129,9 @@ class _AuthPageState extends State<AuthPage> {
       backgroundColor: Theme.of(context).primaryColor,
       body: Column(
         children: <Widget>[
-          _logo(),
+          Logo(),
           SizedBox(height: 70,),
-          _form('Продолжить,,', _next),
+          _form('Продолжить', _next),
           // _lastName()
         ],
       ),
